@@ -1,0 +1,27 @@
+<html>
+<head>
+<title><%= if @document.title then "#{@document.title} | #{@site.title}" else @site.title %></title>
+
+    <%- @getBlock("meta").toHTML() %>
+    <%- @getBlock("styles").toHTML() %>
+    <%- @getBlock("styles").add(["/styles/style.css"]).toHTML() %>
+</head>
+<body>
+    <img src="/images/docpad.gif" />
+<ul>
+    <% for page in @getCollection("pages").toJSON(): %>
+        <li class="<%= if page.id is @document.id then 'active' else 'inactive' %>">
+            <a href="<%= page.url %>">
+                <%= page.title %>
+            </a>
+        </li>
+    <% end %>
+</ul>
+    <h1><%= @document.title %></h1>
+    <div class="post">
+         <%- @content %>
+    </div>
+    <%- @getBlock("scripts").toHTML() %>
+    <% @getBlock("scripts").add(["/vendor/jquery.js","/scripts/script.js"]).toHTML() %>
+</body>
+</html>
